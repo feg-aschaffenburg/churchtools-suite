@@ -13,9 +13,9 @@ Diese README ist die zentrale Dokumentation des aktuellen technischen Stands. Hi
 | Paket | Typ | Version | Einstiegspunkt | Status |
 | --- | --- | --- | --- | --- |
 | ChurchTools Integration Suite | Hauptplugin | 1.3.0.11 | `churchtools-suite.php` | aktiv entwickelt |
-| Elementor Integration | Addon | 1.0.0.3 | [eigenes Repository](https://github.com/FEGAschaffenburg/churchtools-suite-elementor) | eigenständiges Plugin |
-| Posts Sync Addon | Addon | 0.2.0.3 | [eigenes Repository](https://github.com/FEGAschaffenburg/churchtools-suite-posts-sync) | eigenständiges Plugin |
-| Presentations Addon | Addon | 0.1.3 | [eigenes Repository](https://github.com/FEGAschaffenburg/churchtools-suite-presentations) | eigenständiges Plugin |
+| Elementor Integration | Addon | 1.0.0.3 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-elementor) | eigenständiges Plugin |
+| Posts Sync Addon | Addon | 0.2.0.3 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-posts-sync) | eigenständiges Plugin |
+| Presentations Addon | Addon | 0.1.3 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-presentations) | eigenständiges Plugin |
 | ChurchTools Suite Demo | optionales Plugin | 1.1.4.1 | separat | nur Dokumentation/Demo |
 
 ### Abhaengigkeiten

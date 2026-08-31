@@ -6,7 +6,7 @@
 # Danach: .\scripts\release-and-deploy-github.ps1 -AutoVersion
 
 param(
-    [string]$GitHubRepo = "FEGAschaffenburg/churchtools-suite",
+    [string]$GitHubRepo = "feg-aschaffenburg/churchtools-suite",
     [string]$DefaultBranch = "main",
     [switch]$CloneFirst,
     [string]$TargetPath = "C:\dev\churchtools-suite"

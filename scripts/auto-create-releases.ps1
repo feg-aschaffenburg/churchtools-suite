@@ -93,11 +93,11 @@ Dieses Release enthält ZIP-Artefakte für alle Plugins:
 
 ### Hinweise
 - Hauptplugin und Addons werden jetzt zentral im Monorepo verwaltet.
-- Auto-Update der Addons nutzt Releases aus `FEGAschaffenburg/churchtools-suite`.
+- Auto-Update der Addons nutzt Releases aus `feg-aschaffenburg/churchtools-suite`.
 "@
 
 & gh release create $tag `
-    --repo "FEGAschaffenburg/churchtools-suite" `
+    --repo "feg-aschaffenburg/churchtools-suite" `
     --title $title `
     --notes $notes `
     $mainZip $elementorZip $postsSyncZip $presentationsZip

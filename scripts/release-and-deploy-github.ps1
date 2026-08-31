@@ -20,7 +20,7 @@ param(
     [switch]$SkipPush,
     [switch]$SkipRelease,
     [string]$CommitMessage,
-    [string]$GitHubRepo = "FEGAschaffenburg/churchtools-suite",
+    [string]$GitHubRepo = "feg-aschaffenburg/churchtools-suite",
     [string]$DefaultBranch = "main"
 )
 

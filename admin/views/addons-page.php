@@ -34,8 +34,8 @@ function cts_resolve_addon_meta( $plugin_slug, $plugin_uri = '', $plugin_file = 
 		|| strpos( $plugin_file, '/churchtools-suite-elementor.php' ) !== false
 	) {
 		return [
-					'github_repo' => 'FEGAschaffenburg/churchtools-suite-elementor',
-					'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-elementor',
+					'github_repo' => 'feg-aschaffenburg/churchtools-suite-elementor',
+					'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-elementor',
 		];
 	}
 
@@ -44,8 +44,8 @@ function cts_resolve_addon_meta( $plugin_slug, $plugin_uri = '', $plugin_file = 
 		|| strpos( $plugin_file, '/churchtools-suite-posts-sync.php' ) !== false
 	) {
 		return [
-					'github_repo' => 'FEGAschaffenburg/churchtools-suite-posts-sync',
-					'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-posts-sync',
+					'github_repo' => 'feg-aschaffenburg/churchtools-suite-posts-sync',
+					'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-posts-sync',
 		];
 	}
 
@@ -54,23 +54,23 @@ function cts_resolve_addon_meta( $plugin_slug, $plugin_uri = '', $plugin_file = 
 		|| strpos( $plugin_file, '/churchtools-suite-presentations.php' ) !== false
 	) {
 		return [
-					'github_repo' => 'FEGAschaffenburg/churchtools-suite-presentations',
-					'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-presentations',
+					'github_repo' => 'feg-aschaffenburg/churchtools-suite-presentations',
+					'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-presentations',
 		];
 	}
 
 	$known_addons = [
 		'churchtools-suite-elementor' => [
-					'github_repo' => 'FEGAschaffenburg/churchtools-suite-elementor',
-					'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-elementor',
+					'github_repo' => 'feg-aschaffenburg/churchtools-suite-elementor',
+					'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-elementor',
 		],
 		'churchtools-suite-posts-sync' => [
-					'github_repo' => 'FEGAschaffenburg/churchtools-suite-posts-sync',
-					'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-posts-sync',
+					'github_repo' => 'feg-aschaffenburg/churchtools-suite-posts-sync',
+					'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-posts-sync',
 		],
 		'churchtools-suite-presentations' => [
-					'github_repo' => 'FEGAschaffenburg/churchtools-suite-presentations',
-					'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-presentations',
+					'github_repo' => 'feg-aschaffenburg/churchtools-suite-presentations',
+					'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-presentations',
 		],
 	];
 
@@ -262,17 +262,17 @@ function cts_ensure_known_addons_in_table( array $addons ): array {
 		'churchtools-suite-elementor' => [
 			'name' => 'Elementor Integration',
 			'description' => 'Elementor Page Builder Widget für Events aus dem integrierten System.',
-			'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-elementor',
+			'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-elementor',
 		],
 		'churchtools-suite-posts-sync' => [
 			'name' => 'Posts Sync Addon',
 			'description' => 'Synchronisiert Berichte in WordPress-Posts/Seiten.',
-			'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-posts-sync',
+			'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-posts-sync',
 		],
 		'churchtools-suite-presentations' => [
 			'name' => 'Präsentation Addon',
 			'description' => 'Präsentationsseiten für Termine und Informationen.',
-			'details_url' => 'https://github.com/FEGAschaffenburg/churchtools-suite-presentations',
+			'details_url' => 'https://github.com/feg-aschaffenburg/churchtools-suite-presentations',
 		],
 	];
 
@@ -296,7 +296,7 @@ function cts_ensure_known_addons_in_table( array $addons ): array {
 			'plugin_slug' => $slug,
 			'is_active' => false,
 			'is_network_active' => false,
-			'github_repo' => 'FEGAschaffenburg/churchtools-suite-' . $slug,
+			'github_repo' => 'feg-aschaffenburg/churchtools-suite-' . $slug,
 			'details_url' => $meta['details_url'],
 			'is_virtual' => true,
 		];
@@ -364,7 +364,7 @@ $posts_sync_installed = isset( $all_plugins[ $posts_sync_plugin_file ] );
 						<?php esc_html_e( '⚡ Jetzt installieren', 'churchtools-suite' ); ?>
 					</button>
 				<?php endif; ?>
-				<a href="https://github.com/FEGAschaffenburg/churchtools-suite/releases" class="button" target="_blank" rel="noopener noreferrer">
+				<a href="https://github.com/feg-aschaffenburg/churchtools-suite/releases" class="button" target="_blank" rel="noopener noreferrer">
 					<?php esc_html_e( 'Auf GitHub ansehen', 'churchtools-suite' ); ?>
 				</a>
 			</p>

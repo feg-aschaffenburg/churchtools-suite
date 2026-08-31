@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class ChurchTools_Suite_Auto_Updater {
 
     const CRON_HOOK = 'churchtools_suite_check_updates';
-    const GITHUB_API_RELEASES = 'https://api.github.com/repos/FEGAschaffenburg/churchtools-suite/releases?per_page=30';
-    const GITHUB_API_RELEASES_LATEST = 'https://api.github.com/repos/FEGAschaffenburg/churchtools-suite/releases/latest';
+    const GITHUB_API_RELEASES = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases?per_page=30';
+    const GITHUB_API_RELEASES_LATEST = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases/latest';
 
     public static function init(): void {
         add_action( self::CRON_HOOK, [ __CLASS__, 'check_and_update' ] );
@@ -289,7 +289,7 @@ class ChurchTools_Suite_Auto_Updater {
                 return $cached_release;
             }
 
-            $tags_url = 'https://api.github.com/repos/FEGAschaffenburg/churchtools-suite/tags';
+            $tags_url = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/tags';
             $tags_resp = wp_remote_get( $tags_url, [ 'headers' => $headers, 'timeout' => 20 ] );
             if ( is_wp_error( $tags_resp ) ) {
                 if ( $last_http_error instanceof WP_Error ) {
@@ -314,7 +314,7 @@ class ChurchTools_Suite_Auto_Updater {
                 $is_update = version_compare( $latest_tag, $current, '>' );
 
                 return new WP_Error( 'missing_release_asset', 'Kein WordPress-Release-ZIP für das aktuelle GitHub-Release gefunden.' );
-                $html_url = sprintf( 'https://github.com/FEGAschaffenburg/churchtools-suite/releases/tag/%s', rawurlencode( $tag_name ) );
+                $html_url = sprintf( 'https://github.com/feg-aschaffenburg/churchtools-suite/releases/tag/%s', rawurlencode( $tag_name ) );
 
                 $release_data = [
                     'tag_name' => $tag_name,

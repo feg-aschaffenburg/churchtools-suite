@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class ChurchTools_Suite_Update_Checker {
 
     const TRANSIENT_KEY = 'churchtools_suite_github_release';
-    const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/FEGAschaffenburg/churchtools-suite/releases?per_page=30';
-    const GITHUB_API_LATEST_URL = 'https://api.github.com/repos/FEGAschaffenburg/churchtools-suite/releases/latest';
+    const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases?per_page=30';
+    const GITHUB_API_LATEST_URL = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases/latest';
 
     public static function init(): void {
         // Hook both pre_set and site_transient variants to ensure compatibility
@@ -95,7 +95,7 @@ class ChurchTools_Suite_Update_Checker {
             $update->slug = self::get_plugin_slug();
             $update->plugin = $plugin_file;
             $update->new_version = $latest_version;
-            $update->url = $release['html_url'] ?? 'https://github.com/FEGAschaffenburg/churchtools-suite';
+            $update->url = $release['html_url'] ?? 'https://github.com/feg-aschaffenburg/churchtools-suite';
             $update->package = $asset_url;
 
             $transient->response[ $plugin_file ] = $update;
@@ -157,7 +157,7 @@ class ChurchTools_Suite_Update_Checker {
                     'slug' => (string) $meta['slug'],
                     'plugin' => $plugin_file,
                     'new_version' => $latest_version,
-                    'url' => 'https://github.com/FEGAschaffenburg/churchtools-suite/releases',
+                    'url' => 'https://github.com/feg-aschaffenburg/churchtools-suite/releases',
                     'package' => (string) $asset_info['url'],
                 ];
                 unset( $transient->no_update[ $plugin_file ] );

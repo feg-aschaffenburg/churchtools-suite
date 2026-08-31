@@ -3375,15 +3375,15 @@ class ChurchTools_Suite_Admin {
 					</p>
 					<p>
 						<strong><?php esc_html_e( 'GitHub Repository:', 'churchtools-suite' ); ?></strong> 
-						<a href="https://github.com/FEGAschaffenburg/churchtools-suite" target="_blank">FEGAschaffenburg/churchtools-suite</a>
+						<a href="https://github.com/feg-aschaffenburg/churchtools-suite" target="_blank">feg-aschaffenburg/churchtools-suite</a>
 					</p>
 					<p>
 						<strong><?php esc_html_e( 'Dokumentation:', 'churchtools-suite' ); ?></strong> 
-						<a href="https://github.com/FEGAschaffenburg/churchtools-suite/blob/main/README.md" target="_blank">README.md auf GitHub</a>
+						<a href="https://github.com/feg-aschaffenburg/churchtools-suite/blob/main/README.md" target="_blank">README.md auf GitHub</a>
 					</p>
 					<p>
 						<strong><?php esc_html_e( 'Feedback & Bug-Reports:', 'churchtools-suite' ); ?></strong> 
-						<a href="https://github.com/FEGAschaffenburg/churchtools-suite/issues" target="_blank">GitHub Issues</a>
+						<a href="https://github.com/feg-aschaffenburg/churchtools-suite/issues" target="_blank">GitHub Issues</a>
 					</p>
 				</div>
 
@@ -3428,15 +3428,15 @@ class ChurchTools_Suite_Admin {
 		// Map known addons to their standalone repositories and ZIP prefixes.
 		$addon_asset_prefixes = [
 			'churchtools-suite-elementor' => [
-				'repo' => 'FEGAschaffenburg/churchtools-suite-elementor',
+				'repo' => 'feg-aschaffenburg/churchtools-suite-elementor',
 				'prefix' => 'churchtools-suite-elementor-',
 			],
 			'churchtools-suite-posts-sync' => [
-				'repo' => 'FEGAschaffenburg/churchtools-suite-posts-sync',
+				'repo' => 'feg-aschaffenburg/churchtools-suite-posts-sync',
 				'prefix' => 'churchtools-suite-posts-sync-',
 			],
 			'churchtools-suite-presentations' => [
-				'repo' => 'FEGAschaffenburg/churchtools-suite-presentations',
+				'repo' => 'feg-aschaffenburg/churchtools-suite-presentations',
 				'prefix' => 'churchtools-suite-presentations-',
 			],
 		];
@@ -3706,9 +3706,9 @@ class ChurchTools_Suite_Admin {
 
 		$cleared = 0;
 		$addon_repositories = [
-			'churchtools-suite-elementor' => 'FEGAschaffenburg/churchtools-suite-elementor',
-			'churchtools-suite-posts-sync' => 'FEGAschaffenburg/churchtools-suite-posts-sync',
-			'churchtools-suite-presentations' => 'FEGAschaffenburg/churchtools-suite-presentations',
+			'churchtools-suite-elementor' => 'feg-aschaffenburg/churchtools-suite-elementor',
+			'churchtools-suite-posts-sync' => 'feg-aschaffenburg/churchtools-suite-posts-sync',
+			'churchtools-suite-presentations' => 'feg-aschaffenburg/churchtools-suite-presentations',
 		];
 
 		$all_plugins = get_plugins();
@@ -3849,11 +3849,11 @@ class ChurchTools_Suite_Admin {
 			// Clear addon update cache (legacy + new keys)
 			$plugin_slug = dirname( $plugin_file );
 			$repo_map = [
-				'churchtools-suite-elementor' => 'FEGAschaffenburg/churchtools-suite-elementor',
-				'churchtools-suite-posts-sync' => 'FEGAschaffenburg/churchtools-suite-posts-sync',
-				'churchtools-suite-presentations' => 'FEGAschaffenburg/churchtools-suite-presentations',
+				'churchtools-suite-elementor' => 'feg-aschaffenburg/churchtools-suite-elementor',
+				'churchtools-suite-posts-sync' => 'feg-aschaffenburg/churchtools-suite-posts-sync',
+				'churchtools-suite-presentations' => 'feg-aschaffenburg/churchtools-suite-presentations',
 			];
-			$repo = $repo_map[ $plugin_slug ] ?? 'FEGAschaffenburg/churchtools-suite';
+			$repo = $repo_map[ $plugin_slug ] ?? 'feg-aschaffenburg/churchtools-suite';
 			delete_transient( 'cts_addon_update_' . sanitize_key( $repo . '_' . $plugin_slug ) );
 			delete_transient( 'cts_addon_update_' . sanitize_key( $repo . '_' . $plugin_slug . '_' . ltrim( (string) $version, 'vV' ) ) );
 			delete_site_transient( 'update_plugins' );
