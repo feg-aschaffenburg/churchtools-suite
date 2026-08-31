@@ -16,6 +16,7 @@ class ChurchTools_Suite_Update_Checker {
     const TRANSIENT_KEY = 'churchtools_suite_github_release';
     const GITHUB_API_RELEASES_URL = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases?per_page=30';
     const GITHUB_API_LATEST_URL = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases/latest';
+    const FALLBACK_DOWNLOAD_BASE = 'https://plugin.feg-aschaffenburg.de/download';
 
     public static function init(): void {
         // Hook both pre_set and site_transient variants to ensure compatibility
@@ -84,7 +85,7 @@ class ChurchTools_Suite_Update_Checker {
             $asset_url = self::select_main_plugin_zip_url( $release['assets'] ?? [] );
 
             if ( empty( $asset_url ) ) {
-                return $transient;
+                $asset_url = self::build_main_plugin_fallback_url( $release['tag_name'] ?? $latest_version );
             }
 
             // Determine plugin file key as used in the transient
@@ -221,6 +222,36 @@ class ChurchTools_Suite_Update_Checker {
             'version' => '',
             'url' => '',
         ];
+    }
+
+    /**
+     * Build a download URL under the public plugin.feg-aschaffenburg.de download area.
+     *
+     * @param string $filename
+     * @return string
+     */
+    private static function build_fallback_download_url( string $filename ): string {
+        $filename = trim( (string) $filename );
+        if ( $filename === '' ) {
+            return rtrim( self::FALLBACK_DOWNLOAD_BASE, '/' ) . '/churchtools-suite.zip';
+        }
+
+        return rtrim( self::FALLBACK_DOWNLOAD_BASE, '/' ) . '/' . ltrim( $filename, '/' );
+    }
+
+    /**
+     * Build the main plugin fallback ZIP URL from a tag or version.
+     *
+     * @param string $tag_or_version
+     * @return string
+     */
+    private static function build_main_plugin_fallback_url( string $tag_or_version ): string {
+        $version = ltrim( trim( (string) $tag_or_version ), 'vV' );
+        if ( $version === '' ) {
+            return self::build_fallback_download_url( 'churchtools-suite.zip' );
+        }
+
+        return self::build_fallback_download_url( sprintf( 'churchtools-suite-%s.zip', $version ) );
     }
 
     /**

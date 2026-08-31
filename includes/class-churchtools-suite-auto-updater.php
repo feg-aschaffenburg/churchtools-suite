@@ -17,6 +17,7 @@ class ChurchTools_Suite_Auto_Updater {
     const CRON_HOOK = 'churchtools_suite_check_updates';
     const GITHUB_API_RELEASES = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases?per_page=30';
     const GITHUB_API_RELEASES_LATEST = 'https://api.github.com/repos/feg-aschaffenburg/churchtools-suite/releases/latest';
+    const FALLBACK_DOWNLOAD_BASE = 'https://plugin.feg-aschaffenburg.de/download';
 
     public static function init(): void {
         add_action( self::CRON_HOOK, [ __CLASS__, 'check_and_update' ] );
@@ -216,13 +217,16 @@ class ChurchTools_Suite_Auto_Updater {
      */
     public static function get_latest_release_info() {
         $cached = get_transient( 'churchtools_suite_github_release' );
-        if ( is_array( $cached ) && ! empty( $cached['tag_name'] ) ) {
+        if ( ! empty( $cached['tag_name'] ) ) {
             $latest_tag = ltrim( (string) $cached['tag_name'], 'vV' );
             $current = ltrim( CHURCHTOOLS_SUITE_VERSION, 'vV' );
             $cached['latest_version'] = $latest_tag;
             $cached['is_update'] = version_compare( $latest_tag, $current, '>' );
             if ( empty( $cached['zip_url'] ) ) {
                 $cached['zip_url'] = self::select_main_plugin_zip_url( $cached['assets'] ?? [] );
+            }
+            if ( empty( $cached['zip_url'] ) ) {
+                $cached['zip_url'] = self::build_main_plugin_fallback_url( $cached['tag_name'] );
             }
             return $cached;
         }
@@ -252,6 +256,10 @@ class ChurchTools_Suite_Auto_Updater {
                 $releases = json_decode( $body, true );
                 $selected = self::select_highest_stable_release( $releases );
                 if ( ! empty( $selected['tag_name'] ) ) {
+                    $selected['zip_url'] = self::select_main_plugin_zip_url( $selected['assets'] ?? [] );
+                    if ( empty( $selected['zip_url'] ) ) {
+                        $selected['zip_url'] = self::build_main_plugin_fallback_url( $selected['tag_name'] );
+                    }
                     $data = $selected;
                 }
             } elseif ( in_array( $releases_code, [ 403, 429 ], true ) ) {
@@ -343,7 +351,7 @@ class ChurchTools_Suite_Auto_Updater {
         $zip_url = self::select_main_plugin_zip_url( $data['assets'] ?? [] );
 
         if ( empty( $zip_url ) ) {
-            return new WP_Error( 'missing_release_asset', 'Kein WordPress-Release-ZIP für das aktuelle GitHub-Release gefunden.' );
+            $zip_url = self::build_main_plugin_fallback_url( $data['tag_name'] ?? $latest_tag );
         }
 
         $release_data = [
@@ -393,6 +401,36 @@ class ChurchTools_Suite_Auto_Updater {
         }
 
         return $selected;
+    }
+
+    /**
+     * Build a download URL under the public plugin.feg-aschaffenburg.de download area.
+     *
+     * @param string $filename
+     * @return string
+     */
+    private static function build_fallback_download_url( string $filename ): string {
+        $filename = trim( (string) $filename );
+        if ( $filename === '' ) {
+            return rtrim( self::FALLBACK_DOWNLOAD_BASE, '/' ) . '/churchtools-suite.zip';
+        }
+
+        return rtrim( self::FALLBACK_DOWNLOAD_BASE, '/' ) . '/' . ltrim( $filename, '/' );
+    }
+
+    /**
+     * Build the main plugin fallback ZIP URL from a tag or version.
+     *
+     * @param string $tag_or_version
+     * @return string
+     */
+    private static function build_main_plugin_fallback_url( string $tag_or_version ): string {
+        $version = ltrim( trim( (string) $tag_or_version ), 'vV' );
+        if ( $version === '' ) {
+            return self::build_fallback_download_url( 'churchtools-suite.zip' );
+        }
+
+        return self::build_fallback_download_url( sprintf( 'churchtools-suite-%s.zip', $version ) );
     }
 
     /**
