@@ -836,6 +836,25 @@ class ChurchTools_Suite_Event_Sync_Service {
                 'available_keys' => array_keys($event)
             ]
         );
+
+        // Issue #12: Debug logging for image URLs
+        $image_keys = ['image', 'imageUrl', 'picture', 'file', 'attachment', 'banner', 'photo', 'avatar'];
+        $found_image_keys = [];
+        foreach ($image_keys as $key) {
+            if (isset($event[$key])) {
+                $found_image_keys[$key] = $event[$key];
+            }
+        }
+        if (!empty($found_image_keys)) {
+            ChurchTools_Suite_Logger::debug(
+                'event_sync',
+                'Event contains image-related fields',
+                [
+                    'event_id' => $event['id'] ?? null,
+                    'image_fields' => $found_image_keys
+                ]
+            );
+        }
         
         if (!isset($event['id'])) {
             ChurchTools_Suite_Logger::error(
@@ -1023,6 +1042,31 @@ class ChurchTools_Suite_Event_Sync_Service {
                 'appointment_data_keys' => array_keys($appointment_data),
             ]
         );
+
+        // Issue #12: Debug logging for image URLs in appointment data
+        $image_keys = ['image', 'imageUrl', 'picture', 'file', 'attachment', 'banner', 'photo', 'avatar'];
+        $found_image_keys = [];
+        foreach ($image_keys as $key) {
+            if (isset($appointment_data[$key])) {
+                $found_image_keys[$key] = $appointment_data[$key];
+            }
+        }
+        // Also check nested appointment structure
+        foreach ($image_keys as $key) {
+            if (isset($appointment[$key])) {
+                $found_image_keys['appointment.' . $key] = $appointment[$key];
+            }
+        }
+        if (!empty($found_image_keys)) {
+            ChurchTools_Suite_Logger::debug(
+                'event_sync',
+                'Appointment contains image-related fields',
+                [
+                    'appointment_id' => $appointment_id,
+                    'image_fields' => $found_image_keys
+                ]
+            );
+        }
         
         // Extract all available fields from base (v0.9.2.7: Support both nested and flat structure)
         // Newer API: appointment.base (nested)

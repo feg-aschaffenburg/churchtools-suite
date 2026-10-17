@@ -23,7 +23,23 @@
 }
 
 /* === WordPress Admin Notices === */
-/* Fix readability of all admin notices on ChurchTools Suite pages */
+/* Hide other plugin notices on ChurchTools Suite pages, show only our notices */
+body.toplevel_page_churchtools-suite .wrap > .notice,
+body.toplevel_page_churchtools-suite .wrap > .updated,
+body.toplevel_page_churchtools-suite .wrap > .error,
+body.admin_page_churchtools-suite .wrap > .notice,
+body.admin_page_churchtools-suite .wrap > .updated,
+body.admin_page_churchtools-suite .wrap > .error,
+body.toplevel_page_churchtools-suite .notice:not(.cts-wrap .notice),
+body.toplevel_page_churchtools-suite .updated:not(.cts-wrap .updated),
+body.toplevel_page_churchtools-suite .error:not(.cts-wrap .error),
+body.admin_page_churchtools-suite .notice:not(.cts-wrap .notice),
+body.admin_page_churchtools-suite .updated:not(.cts-wrap .updated),
+body.admin_page_churchtools-suite .error:not(.cts-wrap .error) {
+	display: none !important;
+}
+
+/* Fix readability of our admin notices on ChurchTools Suite pages */
 .cts-wrap .notice,
 .cts-wrap .updated,
 .cts-wrap .error,
