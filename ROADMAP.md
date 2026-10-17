@@ -18,6 +18,19 @@ Diese Datei ist die einzige Zukunftsplanung des Hauptplugins. Der abgeschlossene
 
 ---
 
+## Entwicklungs-Workspace / Separierte Kopien
+
+Für die Weiterentwicklung wurden die relevanten Kopien in einen separaten Dev-Baum verschoben:
+
+- Hauptplugin: `z:\dev\churchtools-suite`
+- Demo-Plugin: `z:\dev\churchtools-suite-demo`
+- Addons: `z:\dev\addons\churchtools-suite-elementor`, `z:\dev\addons\churchtools-suite-posts-sync`, `z:\dev\addons\churchtools-suite-presentations`
+- Demo-Theme: `z:\dev\themes\cts-demo-theme`
+
+Die Produktions-Ordner bleiben in `Z:\feg\app\public\wp-content\plugins` und `Z:\feg\app\public\wp-content\themes` erhalten.
+
+---
+
 ## v1.2.x – Bugfixes & Stabilität ✅ ABGESCHLOSSEN
 
 | Version | Feature/Fix | Status |
