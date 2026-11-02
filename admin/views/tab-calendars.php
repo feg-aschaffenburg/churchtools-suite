@@ -128,8 +128,9 @@ $calendar_templates = ChurchTools_Suite_Calendar_Image_Templates::get_templates(
 							}
 						}
 
-					console.error('Calendar sync non-JSON response:', trimmed.substring(0, 500));
-					throw new Error('Server lieferte keine lesbare JSON-Antwort (oft PHP-Warning/Notice vor JSON).');
+						console.error('Calendar sync non-JSON response:', trimmed.substring(0, 500));
+						throw new Error('Server lieferte keine lesbare JSON-Antwort (oft PHP-Warning/Notice vor JSON).');
+					}
 				});
 			}).then(function(data) {
 				if (data.success) {
