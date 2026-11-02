@@ -42,9 +42,13 @@ Außerdem erledigt (02.11.2026, Details in `docs/GITHUB-UND-ZUGAENGE.md`):
 - Release-Check `scripts/check-release.ps1` + `npm run release:check`: Header-/Konstanten-Version, sauberer Arbeitsbaum, Tag-Lage, optional ZIP-Inhalt (`-ZipDir`). Fix auf `devin/aufraeumen`: `create-wp-zip.ps1` wiederhergestellt (wird von `build-wp-zips.ps1` benötigt).
 - Doku v1.3.x: `docs/SCHNELLSTART.md` (Verbindung, Kalenderauswahl, erster Shortcode, `calendar_ids`) und `docs/FAQ.md` (Cache, WP-Cron, Berechtigungen, Addons) geschrieben; Versionsstände angeglichen (1.3.0.14 / 1.1.4.2).
 
+- Demo-Plugin + Theme auf web2980 bereinigt: 3 Plugin-Backups, `scripts/dev-tools/` (18 Dev-Skripte) und Theme-Backups/Workspace-Dateien nach `private/server-cleanup-20261102/` verschoben. Lokales Theme `cts-demo-theme` entsprechend aufgeräumt; Server-Hotfix in `functions.php` (`is_page('churchtools-suite-addons')`) in die lokale Kopie übernommen.
+- Stand: Server-Demo-Plugin v1.1.4.1 vs. Repo v1.1.4.2 (gleicht sich mit nächstem Release aus). Theme `cts-demo-theme` steht in keinem Git-Repo – Kandidat für `feg-aschaffenburg/cts-demo-theme`.
+
 Offen:
 - `plugin-feg-db-dump.sql` (67 MB) im Home von web2738 prüfen – Löschung oder als Backup aufheben.
 - Addon-Repo-Mapping steht an 3 Stellen in `class-churchtools-suite-admin.php` + `addons-page.php` – ggf. zentralisieren.
+- Theme `cts-demo-theme` unter Git stellen (eigenes Repo `feg-aschaffenburg/cts-demo-theme`).
 
 ## 1. Verifizieren (nächste Version v1.3.x)
 
