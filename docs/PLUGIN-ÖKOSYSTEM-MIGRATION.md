@@ -243,6 +243,85 @@ Cron-Hooks, Tabellennamen (Abwärtskompatibilität).
 - **F3 Deprecation-Policy:** wie lange alte AJAX-Actions/Shortcodes/
   CSS-Klassen parallel laufen (Vorschlag: 2 Major-Releases).
 
+### G. Sicherheit & Datenschutz
+
+- **G1 Secret-Scanning in CI** (gitleaks o. a.) — verhindert
+  versehentlich committete Zugangsdaten in allen Repos.
+- **G2 Security-Checkliste als CI:** nonces/caps auf allen AJAX-
+  Handlern (das Audit vom 2026-11 automatisieren), esc_*-Ausgabe,
+  sanitize_*-Eingabe, prepared Statements.
+- **G3 Release-Signierung:** SHA256-Checksums je ZIP im Release +
+  in der Fallback-JSON — Updater kann Integritaet pruefen.
+- **G4 DSGVO-Bausteine:** je Plugin dokumentierte Datenhaltung
+  (welche Daten, wo, wie lange) — Vorbereitung fuer Datenschutz-
+  Seiten der Anwender. Cookie-frei by default.
+- **G5 Einheitliches Rollen-Modell:** `vr_plugin_manager`-Basisrolle
+  + pluginspezifische Caps — User muessen nicht Admins sein.
+
+### H. Developer Experience
+
+- **H1 Einheitliche Local-Dev-Konvention:** Laragon-Setup als Code
+  dokumentiert (PHP-Version, Pretty-Permalinks, WP_DEBUG-Preset),
+  `.wp-env.json` als Alternative fuer Docker-Nutzer.
+- **H2 Editor/IDE-Standards:** `.editorconfig`, PHPCS-Ruleset,
+  empfohlene Extensions — gleiche Formatierung auf allen Maschinen.
+- **H3 Logging-Standard:** zentraler `vr_log()`-Wrapper
+  (WP_DEBUG-aware, in Datei+Option), einheitliche Log-Viewer-Seite
+  im Debug-Tab.
+- **H4 Debug-Werkzeugkasten:** „System Report"-Seite (WP/PHP/Plugin-
+  Versionen, Cron-Status) mit Copy-to-Clipboard fuer Support.
+- **H5 WP-CLI-Kommandos:** Sync-Trigger, Cache-Flush, Health-Check
+  per CLI statt nur UI-Buttons — automatisierbar, besser testbar.
+
+### I. Performance
+
+- **I1 Conditional Asset Loading:** Frontend-CSS/JS nur laden, wenn
+  Shortcode/Block auf der Seite ist (derzeit teils global).
+- **I2 Minify-Pipeline im Build:** `.min.css`/`.min.js` erzeugen,
+  `SCRIPT_DEBUG`-Umschaltung respektieren.
+- **I3 Cache-Konventionen:** Transient-Namen (`vr_<plugin>_…`),
+  TTL-Standardwerte, gezielte Invalidierung nach Sync.
+- **I4 Lazy-Loading:** Bilder/Iframes in Views, IntersectionObserver.
+
+### J. Daten & Lebenszyklus
+
+- **J1 Sauberes uninstall.php ueberall:** Optionen/Transients/CPTs/
+  Cron-Hooks restlos entfernen — definierte Liste je Plugin.
+- **J2 Settings Export/Import:** JSON-Export der Konfiguration —
+  Migration zwischen Instanzen und Backup.
+- **J3 Migrations-Framework:** versionierte DB-/Option-Upgrades
+  (`db_version`-Option + Upgrade-Routine statt Inline-Fixes).
+- **J4 Rollback-Pfad:** jeweils letzte stabile ZIP im Fallback
+  behalten (`-previous.zip`) + „Zurueck zur Vorversion"-Doku.
+
+### K. Editor & Frontend-Zukunft
+
+- **K1 Shared Block Components:** Basis fuer Gutenberg-Bloecke
+  (gemeinsame InspectorControls, Preview-Logik) in vr-core.
+- **K2 Block Patterns:** fertige Layout-Kombis (Event-Grid +
+  Filter + Countdown) als registrierte Patterns.
+- **K3 REST-API-Konvention:** `vr/<plugin>/v1`-Routen mit
+  einheitlichem Schema/Permissions — ermoeglicht Headless/SPA-
+  Nutzung spaeter.
+- **K4 Full-Site-Editing:** Templates/Parts kompatibel halten,
+  keine harten Theme-Annahmen.
+
+### L. Betrieb & Infrastruktur
+
+- **L1 GitHub-Actions Release-Pipeline:** Tag → Build → Release →
+  Fallback-Upload via SSH — heute manuell, spaeter ein Klick.
+- **L2 Matrix-CI:** PHP 8.1–8.4 + WP latest-2 — Inkompatibilitaeten
+  frueh sichtbar.
+- **L3 Monitoring der Demo-Site:** Uptime/HTTP-Check als
+  Fruehwarnung (Fallback down = Updates brechen).
+- **L4 ADR (Architecture Decision Records):** `docs/decisions/`
+  — heutige Entscheidungen (Repo-Ziel, Namespace, Fallback)
+  waeren dort dokumentiert worden.
+- **L5 Multisite-Tauglichkeit** festlegen: explizit unterstuetzen
+  oder dokumentiert ausschliessen.
+- **L6 Dependency-Hygiene:** Composer-NPM-Lockfiles committen,
+  Renovate/Dependabot fuer Update-PRs.
+
 ---
 
 *Erstellt: 2026-11-02 — Referenzen: docs/STYLE-KONZEPT.md,
