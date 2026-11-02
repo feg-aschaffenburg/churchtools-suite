@@ -36,8 +36,8 @@ Hinweise:
 ### Fallback `plugin.feg-aschaffenburg.de`
 
 - Konstante `FALLBACK_DOWNLOAD_BASE = 'https://plugin.feg-aschaffenburg.de/download'` in beiden Updater-Klassen. Erzeugt URLs `…/download/churchtools-suite.zip` bzw. `…/download/churchtools-suite-<version>.zip`.
-- **Status: leer.** Alle geprüften URLs liefern 404 (`churchtools-suite.zip`, `churchtools-suite-1.3.0.14.zip`, `churchtools-suite-elementor-0.6.28.zip`). `/download/` selbst ist eine WP-Seite (200).
-- Die Fallback-ZIPs müssen manuell auf den Server gelegt werden; kein Skript im Repo lädt sie dorthin hoch. Solange GitHub-Assets vorhanden sind, wird der Fallback nicht benötigt.
+- **Status: befüllt (02.11.2026).** Verzeichnis `web/download/` auf web2980 angelegt; alle 4 Release-ZIPs von v1.3.0.14 hochgeladen plus `churchtools-suite.zip` (Kopie des neuesten) und `index.php` (Redirect auf `/`). Alle URLs liefern 200 mit korrekten Größen.
+- Die Fallback-ZIPs werden manuell per SCP auf den Server gelegt; kein Skript im Repo lädt sie automatisch hoch. Bei neuen Releases: `gh release download` + `scp *.zip plugin-test:web/download/`.
 
 ### Release-Erstellung
 
@@ -49,9 +49,9 @@ Hinweise:
 | Zugang | Status | Details |
 |---|---|---|
 | GitHub CLI (`gh`) | ✅ vorhanden | Account `FEGAschaffenburg`, Token-Scopes `repo`, `workflow`, `read:org`, `gist`; Git-Protokoll HTTPS. Push, Releases und Asset-Uploads möglich. |
-| SSH-Konfiguration | ⚠️ unvollständig | `~/.ssh/config` kennt nur `vereinsring-netcup` (anderes Projekt). Der Alias `plugin-test` (Standard in `deploy-scp.ps1`) existiert **nicht** → Skript läuft hier nicht. |
-| SSH `feg.de:22073` | ⚠️ Host erreichbar, Key fehlt | Server antwortet mit `Permission denied (publickey)`. Auf diesem Rechner liegt kein passender Private Key (nur `id_vereinsring_netcup`). `known_hosts` enthält historische Einträge für `[feg.de]:22073`, `[web73.feg.de]:22073`, `[ftp.feg.de]:22073` – der Zugang lief früher vermutlich über einen anderen Rechner/User. |
-| `plugin.feg-aschaffenburg.de:22` | ❌ nicht erreichbar | Direkter SSH auf Port 22 läuft in Timeout; SSH läuft über `feg.de:22073` (Strato). |
+| SSH-Konfiguration | ✅ eingerichtet | `~/.ssh/config` enthält `plugin.feg-aschaffenburg.de` + Alias `plugin-test` (User `aschaffesshplugin2`, Key `id_rsa_plugin_feg_aschaffenburg`) und `feg-aschaffenburg.de` (User `aschaffessh_fegab`, Key `id_rsa_feg_aschaffenburg`), beide → `web73.feg.de:22073`. Übersicht: `C:\Users\nauma\.ssh\SSH-UEBERSICHT.md` |
+| SSH `web73.feg.de:22073` | ✅ getestet | `ssh plugin-test` → web2980 (Docroot `web/` = plugin.feg-aschaffenburg.de); `ssh feg-aschaffenburg.de` → web2738. `deploy-scp.ps1` läuft (Default `-SshHost plugin-test`, RemotePath `web/wp-content/plugins/churchtools-suite` existiert). |
+| `plugin.feg-aschaffenburg.de:22` | ❌ nicht erreichbar | Direkter SSH auf Port 22 läuft in Timeout; SSH läuft über `web73.feg.de:22073` (Strato). |
 | WP-Admin `plugin.feg-aschaffenburg.de` | ❓ unbekannt | `wp-login.php` erreichbar (200); Zugangsdaten liegen hier nicht vor. |
 
 ## 4. Konsequenz: Was ist für ein Update nötig?
@@ -59,13 +59,16 @@ Hinweise:
 | Aufgabe | Möglich? | Voraussetzung |
 |---|---|---|
 | Code-Änderungen + GitHub-Release | ✅ ja | `gh`-Login vorhanden; `release-and-deploy-github.ps1` nutzbar |
-| Plugin-Updates an Installationen | ✅ ja (über GitHub) | GitHub-Release mit Assets; Fallback aktuell tot, aber nicht benötigt |
-| Fallback-ZIPs auf feg.de legen | ❌ nein | SSH-Key für `feg.de:22073` (Strato-Hosting) oder WP-Admin-Zugang nötig |
-| Deploy per `deploy-scp.ps1` | ❌ nein | SSH-Alias `plugin-test` + Key in `~/.ssh` anlegen |
+| Plugin-Updates an Installationen | ✅ ja (über GitHub) | GitHub-Release mit Assets; Fallback als Sicherung aktiv |
+| Fallback-ZIPs auf feg.de legen | ✅ ja | `scp *.zip plugin-test:web/download/` (SSH-Zugang eingerichtet, Stand 02.11.2026 befüllt) |
+| Deploy per `deploy-scp.ps1` | ✅ ja | Alias `plugin-test` in `~/.ssh/config`, RemotePath existiert auf web2980 |
 
 ## 5. Empfehlungen
 
-1. **SSH-Zugang einrichten:** Private Key für `feg.de:22073` (Strato) beschaffen oder neuen Key hinterlegen und `~/.ssh/config` um `plugin-test` ergänzen – sonst bleibt `deploy-scp.ps1` auf diesem Rechner unbrauchbar. Benötigt: SSH-Benutzername + Private Key (oder Passwort zum Einrichten).
-2. **Fallback-Downloads befüllen:** Aktuelle Release-ZIPs unter `/download/` ablegen, damit der Fallback-Greif bei GitHub-Ausfällen/Rate-Limits funktioniert. Benötigt Serverzugang (SSH/SFTP) oder WP-Admin-Zugang zu `plugin.feg-aschaffenburg.de`.
-3. **Addon-Stände pushen:** Die lokalen Addon-Versionen sind neuer als ihre Repos (siehe Tabelle) – Commits erstellen und pushen, sobald freigegeben.
-4. **Demo-Repo-Abgleich:** Divergente Historie zusammenführen (siehe Hinweise oben).
+Erledigt (02.11.2026): SSH-Zugang eingerichtet und getestet, Fallback-Downloads befüllt, Addon-Stände gepusht (v1.0.0.3 / v0.2.0.3 / v0.1.3), Demo-Repo-Historie via `--allow-unrelated-histories` zusammengeführt und gepusht.
+
+Offen:
+
+1. **wp-config.php.backup im Webroot:** Auf web2980 liegt `web/wp-config.php.backup` – ggf. DB-Zugangsdaten öffentlich abrufbar. Prüfen/entfernen.
+2. **Release-Prozess dokumentiert Fallback-Schritt:** Bei künftigen Releases `web/download/` aktualisieren (SCP-Befehl oben).
+3. **Repo-Mapping doppelt gepflegt:** Addon-Repos stehen an drei Stellen in `class-churchtools-suite-admin.php` plus `addons-page.php` – ggf. zentralisieren.
