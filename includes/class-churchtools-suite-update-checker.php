@@ -133,6 +133,10 @@ class ChurchTools_Suite_Update_Checker {
                 'slug' => 'churchtools-suite-posts-sync',
                 'prefix' => 'churchtools-suite-posts-sync-',
             ],
+            'churchtools-suite-presentations/churchtools-suite-presentations.php' => [
+                'slug' => 'churchtools-suite-presentations',
+                'prefix' => 'churchtools-suite-presentations-',
+            ],
         ];
 
         foreach ( $addon_map as $default_plugin_file => $meta ) {
