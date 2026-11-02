@@ -508,54 +508,6 @@ class ChurchTools_Suite_Admin {
 	}
 	
 	/**
-	 * AJAX Handler: Cleanup Legacy Cronjobs (v1.0.6.0)
-	 */
-	public function ajax_cleanup_cronjobs() {
-		check_ajax_referer( 'churchtools_suite_admin', 'nonce' );
-		
-		if ( ! current_user_can( 'manage_churchtools_suite' ) ) {
-			wp_send_json_error( [ 'message' => __( 'Keine Berechtigung.', 'churchtools-suite' ) ] );
-			return;
-		}
-		
-		// Legacy cronjob patterns to remove
-		$legacy_hooks = [
-			'puc_cron_check_updates-KN-Churchtoolplugin',
-			'puc_cron_check_updates-churchtools-suite',
-		];
-		
-		$removed = [];
-		$not_found = [];
-		
-		foreach ( $legacy_hooks as $hook ) {
-			if ( wp_next_scheduled( $hook ) ) {
-				wp_clear_scheduled_hook( $hook );
-				$removed[] = $hook;
-			} else {
-				$not_found[] = $hook;
-			}
-		}
-		
-		// Log cleanup
-		if ( ! empty( $removed ) && class_exists( 'ChurchTools_Suite_Logger' ) ) {
-			require_once CHURCHTOOLS_SUITE_PATH . 'includes/class-churchtools-suite-logger.php';
-			ChurchTools_Suite_Logger::info( 'cronjob_cleanup', 'Verwaiste Cronjobs entfernt', [
-				'removed' => $removed,
-				'count' => count( $removed )
-			] );
-		}
-		
-		wp_send_json_success( [
-			'message' => sprintf(
-				__( '%d verwaiste Cronjobs entfernt.', 'churchtools-suite' ),
-				count( $removed )
-			),
-			'removed' => $removed,
-			'not_found' => $not_found,
-		] );
-	}
-	
-	/**
 	 * Display main admin page
 	 */
 	public function display_admin_page() {
@@ -641,7 +593,6 @@ class ChurchTools_Suite_Admin {
 		add_action( 'wp_ajax_cts_clear_events', [ $this, 'ajax_clear_events' ] );
 		add_action( 'wp_ajax_cts_clear_calendars', [ $this, 'ajax_clear_calendars' ] );
 		add_action( 'wp_ajax_cts_clear_services', [ $this, 'ajax_clear_services' ] );
-		add_action( 'wp_ajax_cts_cleanup_cronjobs', [ $this, 'ajax_cleanup_cronjobs' ] ); // v1.0.6.0
 		
 		// Frontend AJAX (für alle Nutzer, auch nicht-eingeloggte) (v0.10.2.7)
 		add_action( 'wp_ajax_cts_load_calendar_month', [ $this, 'ajax_load_calendar_month' ] );
