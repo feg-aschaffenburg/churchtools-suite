@@ -166,5 +166,84 @@ Cron-Hooks, Tabellennamen (Abwärtskompatibilität).
 | 5 | Theme `cts-demo-theme` | offen: eigenes Repo? Namespace? |
 | 6 | GitHub-Repos anlegen | geplant, Umsetzung mit Phase 0.2/0.5 |
 
+---
+
+## Ideen-Backlog (Umsetzung ab 2027 — erst sammeln, dann priorisieren)
+
+### A. Shared Code (ueber CSS hinaus)
+
+- **A1 `vr-core` Shared-Library:** gemeinsame PHP-Basisklassen —
+  Auto-Updater, Settings-Framework, AJAX-Basis (Nonce+Caps),
+  Logger, Cron-Helper, Uninstall-Cleanup. Verteilung wie CSS:
+  per Build kopiert oder als Mini-Must-Use-Core.
+- **A2 `vr-admin.js` Shared-JS:** Fetch-Helper (`vrAjax(action, data)`),
+  Result-Renderer, Loading-State, Duplicate-Handler-Guard —
+  die Patterns aus STYLE-KONZEPT §8 als wiederverwendbares Modul.
+- **A3 Plugin-Boilerplate:** Template-Repo fuer neue Plugins —
+  Ordnerstruktur, Enqueue-Geruest, Settings-Page mit vr-Tabs,
+  CI-Workflow, Build-Skript. `gh repo create --template`.
+
+### B. Update- & Release-Strategie
+
+- **B1 WP.org-Publikation pruefen:** kostenlose Plugins ueber
+  wordpress.org verteilen → eingebauter WP-Updater statt
+  GitHub-Fallback. Grosse strategische Frage (Exposure vs.
+  Review-Auflagen, Slug-Reservierung).
+- **B2 Eigener Update-Server:** falls eigene Domain kommt —
+  einfache JSON-API (version, download_url) auf dem Webspace;
+  entkoppelt von GitHub-Releases.
+- **B3 Release-Konventionen:** einheitliches Versionierungsschema
+  (aktuell 4-teilig `1.3.0.17` — beibehalten oder SemVer?),
+  Changelog-Format, Release-Notes-Template, Beta-Channel.
+- **B4 Kompatibilitaets-Matrix:** WP-Min/PHP-Min/Elementor-Min je
+  Plugin dokumentieren + im Header (`Requires at least`, `Requires PHP`).
+
+### C. Qualitaet & Testing
+
+- **C1 PHPCS + WordPress-Coding-Standards** in die CI neben php-lint.
+- **C2 Browser-Smoke-Tests (Playwright):** Admin-Seiten laden, Script-
+  Tags pruefen, Buttons klicken — haette den Delayed-Dependency-Bug
+  (admin.js nie ausgegeben) sofort gefunden.
+- **C3 WP-CLI-Testharness:** lokale Admin-Page-Render-Tests wie der
+  Debug-Ansatz vom 2026-11-02 verallgemeinern.
+- **C4 PHPStan/Psalm** fuer Typfehler in den groesseren Plugins.
+
+### D. Dokumentation & Branding
+
+- **D1 Zentrale Doku-Site:** Demo-Site als Doku-Hub fuer ALLE Plugins
+  (heute: nur ChurchTools). Einheitliche Struktur
+  Schnellstart/Shortcodes/FAQ je Plugin.
+- **D2 Produktfamilien-Name:** gemeinsamer Markenname fuer das
+  Oekosystem (Icons, Banner-Assets 772x250/1544x500 fuer WP.org-Stil).
+- **D3 Doku-Geruest:** einheitliche Dateien je Repo —
+  README / SCHNELLSTART / FAQ / CHANGELOG / CONTRIBUTING / SECURITY.md.
+- **D4 i18n-Strategie:** de_DE + en_US Basis, .pot-Generierung
+  im Build, Textdomain = Slug.
+
+### E. Architektur & Betrieb
+
+- **E1 Monorepo vs. Polyrepo:** Addons koennten ins Hauptrepo
+  (einfacheres gemeinsames Releasen) — oder bleiben getrennt.
+  Beim persoenlichen Account neu bewerten.
+- **E2 Demo-/Staging-Seite:** demo-Installation als dauerhafte
+  Testbuehne fuer alle Plugins (Auto-Deploy bei Release?).
+- **E3 Feature-Flags:** neue Funktionen hinter Settings/Constants
+  aktivieren — sicherere Releases bei Live-Nutzern.
+- **E4 Telemetrie:** bewusst keine — aber als Design-Prinzip
+  festhalten (Datensparsamkeit als Feature, passt zu Kirchen-Kontext).
+- **E5 Secrets-Handling:** nie Credentials im Repo; zentrale
+  Doku wo Zugangsdaten gepflegt werden (kein Klartext).
+
+### F. Community & Wartung
+
+- **F1 Issue/PR-Templates** in allen Repos (Bug-Report mit
+  WP/PHP/Plugin-Versionen).
+- **F2 Maintenance-Fenster:** fester Rhythmus fuer
+  WP-Kompatibilitaets-Updates (nach jedem WP-Core-Release pruefen).
+- **F3 Deprecation-Policy:** wie lange alte AJAX-Actions/Shortcodes/
+  CSS-Klassen parallel laufen (Vorschlag: 2 Major-Releases).
+
+---
+
 *Erstellt: 2026-11-02 — Referenzen: docs/STYLE-KONZEPT.md,
 docs/GITHUB-UND-ZUGAENGE.md*
