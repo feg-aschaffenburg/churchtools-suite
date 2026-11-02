@@ -38,8 +38,11 @@ Außerdem erledigt (02.11.2026, Details in `docs/GITHUB-UND-ZUGAENGE.md`):
 - `ajax_load_calendar_month` loggt nur noch `array_keys($_POST)` statt Nonce-Wert.
 - Verwaister Clone-Rest `churchtools-suite-demo` in dev-Site gelöscht.
 
+- Übergangs-Code `puc_cron_check_updates-*` entfernt (Activator-Methode, AJAX-Handler, Debug-Button) – Übergangszeit vorbei.
+- Release-Check `scripts/check-release.ps1` + `npm run release:check`: Header-/Konstanten-Version, sauberer Arbeitsbaum, Tag-Lage, optional ZIP-Inhalt (`-ZipDir`). Fix auf `devin/aufraeumen`: `create-wp-zip.ps1` wiederhergestellt (wird von `build-wp-zips.ps1` benötigt).
+- Doku v1.3.x: `docs/SCHNELLSTART.md` (Verbindung, Kalenderauswahl, erster Shortcode, `calendar_ids`) und `docs/FAQ.md` (Cache, WP-Cron, Berechtigungen, Addons) geschrieben; Versionsstände angeglichen (1.3.0.14 / 1.1.4.2).
+
 Offen:
-- Alte Cron-Hooks `puc_cron_check_updates-*` nach Übergangszeit entfernen. Cleanup-Mechanismus existiert bereits (`cleanup_legacy_cronjobs()` im Activator seit v1.0.6.0 + AJAX-Handler im Debug-Tab). Offen ist die Entscheidung, ab wann der Übergangs-Code selbst entfernt werden kann.
 - `plugin-feg-db-dump.sql` (67 MB) im Home von web2738 prüfen – Löschung oder als Backup aufheben.
 - Addon-Repo-Mapping steht an 3 Stellen in `class-churchtools-suite-admin.php` + `addons-page.php` – ggf. zentralisieren.
 
