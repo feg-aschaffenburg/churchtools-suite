@@ -43,18 +43,28 @@ Betroffene Plugins (Stand heute):
 
 ### 0.2 Repository-Struktur
 
-Entscheidung (offen, Optionen):
+**Entschieden (2026-11-02): Option A** — Repos ziehen auf den persönlichen
+GitHub-Account (`FEGAschaffenburg`) um. Die Organisationen können bei
+Bedarf forken; Autorschaft liegt damit klar bei der Person.
 
-| Option | Vor | Contra |
+**Geplante Repos (Anlage erfolgt später, siehe Phase 1.x):**
+
+| Repo | Inhalt | Sichtbarkeit |
 |---|---|---|
-| A: Repos unter persönlichem GitHub-Account | volle Kontrolle, globale Bereitstellung | Orgs verlieren direkte Kontrolle (Forks möglich) |
-| B: Neue neutrale GitHub-Org (z. B. `vr-plugins`) | geteilter Besitz, sauber | zweite Org pflegen |
-| C: Status quo in `feg-aschaffenburg` | kein Umbau | Org-Branding, VR-Plugins passen nicht rein |
+| `<user>/churchtools-suite` | Hauptplugin (Transfer von feg-aschaffenburg) | public |
+| `<user>/churchtools-suite-elementor` | Addon | public |
+| `<user>/churchtools-suite-posts-sync` | Addon | public |
+| `<user>/churchtools-suite-presentations` | Addon | public |
+| `<user>/churchtools-suite-demos` | Demo-Plugin | privat oder public |
+| `<user>/plugin-design-system` | Shared CSS/JS (vr-Namespace) | public |
+| `<user>/cts-demo-theme` | Demo-Theme | TBD |
 
-- [ ] Entscheidung treffen (Empfehlung: **A** mit Org-Forks, oder **B**)
-- [ ] Bei Umzug: `git remote` in lokalen Checkouts anpassen,
-      Updater-URLs im Code aktualisieren (siehe 0.4)
-- [ ] `cts-demo-theme` ggf. eigenes Repo anlegen
+- [ ] Repo-Transfers durchführen (GitHub Transfer behält Issues/Stars/PRs)
+- [ ] `git remote set-url origin` in allen lokalen Checkouts
+- [ ] Updater-URLs im Code aktualisieren (siehe 0.4) — **Release erst
+      nach Umzug**, sonst zeigt der Updater ins Leere
+- [ ] Alte Repo-URLs: GitHub leitet automatisch weiter — trotzdem
+      Updater zeitnah patchen
 
 ### 0.3 Namespace-Strategie (verbindlich)
 
@@ -80,18 +90,25 @@ Zwei Ebenen (siehe STYLE-KONZEPT.md, Abschnitt Namespaces):
 
 ### 0.4 Update-Kanal & Fallback sichern
 
+**Offen (2026-11-02):** Überlegung läuft, eine eigene Hobby-Domain für
+die Plugins einzurichten. Bis dahin bleibt der Fallback auf
+`plugin.feg-aschaffenburg.de/download/` bestehen — der ist eingerichtet
+und getestet (alle ZIPs erreichbar, HTTP 200).
+
 - [ ] Updater zeigt nach Repo-Umzug auf neue GitHub-URLs
       (`class-churchtools-suite-auto-updater.php`, `update-checker.php`)
-- [ ] Fallback `plugin.feg-aschaffenburg.de/download/` beibehalten oder
-      neutrale Domain einführen — Entscheidung
+- [ ] Fallback-Domain später final festlegen (eigene Domain wäre der
+      sauberste Weg — dann Fallback-Base-URL im Code konfigurierbar machen)
 - [ ] Release-Prozess bleibt: `build-wp-zips.ps1` → `gh release` →
       Fallback-Upload (`plugin-test`)
 
 ### 0.5 Basis-Tooling (vor Plugin-Migration)
 
-- [ ] `dev-shared/plugin-design-system/` anlegen:
-      `tokens.css`, `components.css`, `admin.css`, `public.css`
-      (Quelle: ChurchTools-CSS, auf `vr-` gemappt)
+- [x] `C:\laragon\www\dev-shared\plugin-design-system/` angelegt
+      (2026-11-02): `tokens.css` (Design-Variablen), `vr-admin.css`,
+      `vr-public.css`, `vr-single.css` — komplette ChurchTools-CSS-Basis
+      auf `vr-`-Namespace übersetzt, plus README mit Einbindungs-Anleitung.
+      GitHub-Repo folgt mit den Repo-Transfers (Phase 0.2)
 - [ ] Build-Skripte erweitern: Shared-Dateien beim ZIP-Bau in jedes
       Plugin kopieren (Modell A — keine Laufzeit-Abhängigkeit)
 - [ ] `check-release.ps1` als Vorlage für alle Plugins
@@ -140,13 +157,14 @@ Cron-Hooks, Tabellennamen (Abwärtskompatibilität).
 
 ## Offene Entscheidungen
 
-| # | Frage | Optionen |
+| # | Frage | Status |
 |---|---|---|
-| 1 | Repo-Ziel | persönlicher Account / neue Org / feg-aschaffenburg |
-| 2 | Fallback-Domain | plugin.feg-aschaffenburg.de behalten / neutral |
-| 3 | Migrations-Reihenfolge CSS | Big-Bang pro Plugin vs. inkrementell |
-| 4 | VR-Plugin-Liste | welche VR-Plugins kommen ins Ökosystem |
-| 5 | Theme `cts-demo-theme` | eigenes Repo? Namespace? |
+| 1 | Repo-Ziel | ✅ **entschieden:** persönlicher Account (2026-11-02) |
+| 2 | Fallback-Domain | offen: ggf. eigene Hobby-Domain; vorerst plugin.feg-aschaffenburg.de |
+| 3 | Migrations-Reihenfolge CSS | offen: Big-Bang pro Plugin vs. inkrementell |
+| 4 | VR-Plugin-Liste | offen: welche VR-Plugins kommen ins Ökosystem |
+| 5 | Theme `cts-demo-theme` | offen: eigenes Repo? Namespace? |
+| 6 | GitHub-Repos anlegen | geplant, Umsetzung mit Phase 0.2/0.5 |
 
 *Erstellt: 2026-11-02 — Referenzen: docs/STYLE-KONZEPT.md,
 docs/GITHUB-UND-ZUGAENGE.md*
