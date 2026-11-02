@@ -45,6 +45,10 @@ Außerdem erledigt (02.11.2026, Details in `docs/GITHUB-UND-ZUGAENGE.md`):
 - Demo-Plugin + Theme auf web2980 bereinigt: 3 Plugin-Backups, `scripts/dev-tools/` (18 Dev-Skripte) und Theme-Backups/Workspace-Dateien nach `private/server-cleanup-20261102/` verschoben. Lokales Theme `cts-demo-theme` entsprechend aufgeräumt; Server-Hotfix in `functions.php` (`is_page('churchtools-suite-addons')`) in die lokale Kopie übernommen.
 - Stand: Server-Demo-Plugin v1.1.4.1 vs. Repo v1.1.4.2 (gleicht sich mit nächstem Release aus). Theme `cts-demo-theme` steht in keinem Git-Repo – Kandidat für `feg-aschaffenburg/cts-demo-theme`.
 
+- Grossaufraeumung (02.11.): Elementor-Repo um 2 Widget-Backups + test-logs.php bereinigt; Hauptplugin um 17 Deprecated-Template-Shims (reine require_once-Redirects, Loader nutzt Präfix-Namen) + classic.php.backup bereinigt. Server-Archive (private/server-cleanup-20261102 auf beiden Webs) endgueltig geloescht.
+- Versionshebung: Suite 1.3.0.15, Elementor 1.0.0.4, Posts-Sync 0.2.0.4, Presentations 0.1.4, Demo 1.1.4.3 – alle Repos gepusht.
+- Nicht entfernt: deprecated Repository-Methoden (upsert_by_event_id u. a.) – werden noch von event-sync-service aufgerufen; Umbau der Aufrufer ist Feature-Change, kein Cleanup.
+
 Offen:
 - `plugin-feg-db-dump.sql` (67 MB) im Home von web2738 prüfen – Löschung oder als Backup aufheben.
 - Addon-Repo-Mapping steht an 3 Stellen in `class-churchtools-suite-admin.php` + `addons-page.php` – ggf. zentralisieren.
