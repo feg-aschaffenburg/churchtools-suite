@@ -322,6 +322,57 @@ Cron-Hooks, Tabellennamen (Abwärtskompatibilität).
 - **L6 Dependency-Hygiene:** Composer-NPM-Lockfiles committen,
   Renovate/Dependabot fuer Update-PRs.
 
+### M. Inhaltliche Konsolidierung (Code-Dubletten, Analyse 2026-11-02)
+
+Konkret im Code gefundene Duplikate — Kandidaten zum Zusammenfuehren:
+
+- **M1 Auto-Updater existiert 3x mit unterschiedlicher Reife:**
+  Hauptplugin 698 Zeilen, Elementor 253, Posts-Sync 342 Zeilen.
+  → **Eine** `VR_Auto_Updater`-Klasse in vr-core, konfiguriert ueber
+  Slug/Repo/Fallback-URL. Entscheidung welcher Stand die Basis ist
+  (Hauptplugin ist am weitesten: Fallback + Token-Slot).
+- **M2 Update-Checker-Addon-Mapping an 4 Stellen** (bereits bekannt) —
+  in eine zentrale Registry `vr_addon_registry()`.
+- **M3 Subtab-View-Boilerplate ~15x** im Hauptplugin
+  (`admin/views/settings/subtab-*.php`, `debug/subtab-*.php`):
+  gleiches Card-Geruest, gleiche Tab-Nav, gleiche Form-Struktur.
+  → **Generischer Subtab-Renderer:** Subtabs als Config-Array
+  (slug/titel/capability/callback), ein Loader rendert Nav+Content.
+  Neue Subtabs = 1 Array-Eintrag statt Template-Kopie.
+- **M4 AJAX-Boilerplate 38x:** `check_ajax_referer` +
+  Capability-Check + `wp_send_json_*` immer identisch.
+  → `vr_ajax_register(action, cap, callback)`-Helper in vr-core
+  (registriert wp_ajax_*, prueft Nonce+Cap, wrapped Exceptions).
+- **M5 PHP-Template-Partials:** Card/Badge/Button/Notice-Markup
+  wird dutzendfach per HTML in Views geschrieben.
+  → `vr_card($icon,$title,$body)`, `vr_badge($type,$text)`,
+  `vr_button($label,$variant)` als Partial-Funktionen —
+  Markup an einer Stelle, Konsistenz garantiert.
+- **M6 View-Engine (46 Template-Dateien!):** Prefix-Mapping
+  classic/modern/minimal + Varianten — dieselbe Loader-Logik
+  waere fuer jedes Plugin mit Views nutzbar (Events, Formulare,
+  Newsletter). → `vr_view_render($view_id, $variant, $data)`.
+- **M7 Listen-/Tabellen-Komponenten:** Events-, Services-,
+  Reports-Listen teilen Filter/Pagination/Empty-State-Markup.
+  → Generische `vr_list_table` (kein WP_List_Table — zu alt,
+  eigenes schlankes Grid).
+- **M8 Build-/Deploy-Skripte dupliziert:** `scripts/` liegt in
+  mehreren Addon-Repos (create-wp-zip, deploy-scp).
+  → Ein Shared `vr-build/` Skript-Set im Design-System-Repo,
+  pro Plugin nur `plugin.config.ps1` mit Slug/Pfaden.
+- **M9 Debug-/Reparatur-Skripte:** `check-*.php`, `fix-*.php`
+  tauchen in jedem Plugin auf (auch auf dem Server geloescht).
+  → `vr-debug`-Toolkit: System-Report, Capability-Check,
+  Cron-Status — eine Datei statt Ad-hoc-Skripten.
+- **M10 Doku-Templates:** README/SCHNELLSTART/FAQ folgen immer
+  demselben Geruest → Templates ins Design-System, pro Plugin
+  nur Inhalte pflegen.
+- **M11 Doppelte Hilfsfunktionen:** `is_numeric_array`,
+  `delete_all`, `build_fallback_url` etc. mehrfach definiert
+  → in `vr-core/helpers.php` sammeln.
+- **M12 Shortcode-Registrierung + Parameter-Parsing** identisch
+  pro Addon → `vr_shortcode_register($tag, $defaults, $cb)`.
+
 ---
 
 *Erstellt: 2026-11-02 — Referenzen: docs/STYLE-KONZEPT.md,
