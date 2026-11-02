@@ -28,9 +28,20 @@ Geprüft / erledigt (02.11.2026):
 - CI: `.github/workflows/php-lint.yml` angelegt (`php -l` über alle PHP-Dateien, PHP 8.2). Lokal verifiziert: 101 Dateien fehlerfrei.
 - Nonce- und Rechteprüfung der `wp_ajax_*`-Handler verifiziert: alle 38 Handler prüfen Nonce (vor jeder Aktion); Capability-Checks überall vorhanden außer den 3 `nopriv`-Handlern (`get_event_details`, `get_modal_template`, `load_calendar_month` – öffentlich, by design, prüfen `churchtools_suite_public`-Nonce).
 
+Außerdem erledigt (02.11.2026, Details in `docs/GITHUB-UND-ZUGAENGE.md`):
+- Addon-Repos mit GitHub verknüpft und lokale Stände gepusht (elementor v1.0.0.3, posts-sync v0.2.0.3, presentations v0.1.3).
+- Demo-Repo `churchtools-suite-demos`: divergente Historie via `--allow-unrelated-histories` gemergt, 5 lose Dev-Skripte entfernt, gepusht.
+- `inject_addon_updates()`: Presentations-Addon ergänzt (WP-Auto-Updates).
+- SSH-Zugänge `plugin-test`/`feg-aschaffenburg.de` (web73.feg.de:22073) eingerichtet und getestet; `deploy-scp.ps1` lauffähig.
+- Fallback `plugin.feg-aschaffenburg.de/download/` mit Release-ZIPs befüllt (alle 200).
+- Server aufgeräumt: `wp-config.php.backup`, 5 Dev-Dateien (web2980) und 4 Strato-Altdateien (web2738) nach `private/server-cleanup-20261102/` verschoben.
+- `ajax_load_calendar_month` loggt nur noch `array_keys($_POST)` statt Nonce-Wert.
+- Verwaister Clone-Rest `churchtools-suite-demo` in dev-Site gelöscht.
+
 Offen:
 - Alte Cron-Hooks `puc_cron_check_updates-*` nach Übergangszeit entfernen. Cleanup-Mechanismus existiert bereits (`cleanup_legacy_cronjobs()` im Activator seit v1.0.6.0 + AJAX-Handler im Debug-Tab). Offen ist die Entscheidung, ab wann der Übergangs-Code selbst entfernt werden kann.
-- Kleinigkeit: `ajax_load_calendar_month` loggt `$_POST` inkl. Nonce auf Debug-Level – ggf. reduzieren.
+- `plugin-feg-db-dump.sql` (67 MB) im Home von web2738 prüfen – Löschung oder als Backup aufheben.
+- Addon-Repo-Mapping steht an 3 Stellen in `class-churchtools-suite-admin.php` + `addons-page.php` – ggf. zentralisieren.
 
 ## 1. Verifizieren (nächste Version v1.3.x)
 

@@ -2971,7 +2971,7 @@ class ChurchTools_Suite_Admin {
 	public function ajax_load_calendar_month() {
 		// Log AJAX call start
 		ChurchTools_Suite_Logger::debug( 'ajax_calendar', 'AJAX call started', [
-			'POST' => $_POST,
+			'post_keys' => array_keys( $_POST ),
 			'nonce_isset' => isset( $_POST['nonce'] ),
 		] );
 		
