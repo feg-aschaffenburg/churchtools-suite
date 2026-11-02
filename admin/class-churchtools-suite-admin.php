@@ -200,7 +200,7 @@ class ChurchTools_Suite_Admin {
 		wp_enqueue_script(
 			'churchtools-suite-admin',
 			CHURCHTOOLS_SUITE_URL . 'assets/js/churchtools-suite-admin.js',
-			[ 'jquery', 'churchtools-suite-public' ],
+			[ 'jquery' ],
 			$this->version,
 			true
 		);
