@@ -375,5 +375,53 @@ Konkret im Code gefundene Duplikate — Kandidaten zum Zusammenfuehren:
 
 ---
 
+## Quick-Win-Übersicht (Bewertung 2026-11-02)
+
+Kriterien: geringer Aufwand (< ~2h pro Plugin), kein Risiko fuer
+Bestandsinstallationen, kein Blocker durch offene Entscheidungen.
+
+### ✅ Lohnt sich wirklich (empfohlene Reihenfolge)
+
+| # | Item | Aufwand | Nutzen | Bemerkung |
+|---|---|---|---|---|
+| Q1 | **Phase-1-Header** (Author/Lizenz/URI je Plugin) | 15 min/Plugin | Autorschaft klar, WP.org-ready | braucht nur finale Author-URI |
+| Q2 | **LICENSE + No-Warranty pruefen** | 15 min/Plugin | Haftungsschutz | GPLv2-Text kopieren |
+| Q3 | **B4 Kompatibilitaets-Header** (`Requires at least`, `Requires PHP`) | 10 min/Plugin | WP.org-Pflichtfeld, saubere Aktivierungspruefung | aktuelle Mindestwerte verifizieren |
+| Q4 | **G1 Secret-Scanning CI** (gitleaks) | 30 min einmal | verhindert Credential-Leaks in ALLEN Repos | ein Workflow-Template ueberall |
+| Q5 | **php-lint CI in Addons** | 20 min/Repo | besteht nur im Hauptplugin | Workflow kopieren |
+| Q6 | **F1 Issue/PR-Templates** | 30 min einmal | bessere Bug-Reports | ein Set in `.github/` je Repo |
+| Q7 | **J4 Rollback-ZIP** | 20 min | `-previous.zip` im Fallback | eine Zeile im Upload-Ablauf |
+| Q8 | **L4 ADR-Start** `docs/decisions/` | 30 min | heutige Entscheidungen nachdokumentieren | 3-4 Dateien aus diesem Plan |
+| Q9 | **F3 Deprecation-Policy + D3 Doku-Geruest** | 1h | schriftlich, sonst verliert sich's | Textbausteine |
+| Q10 | **L6 Dependabot** aktivieren | 10 min/Repo | Update-PRs automatisch | nur gh-Config |
+| Q11 | **E5/F2 Betriebsregeln** (Secrets-Doku, WP-Release-Rhythmus) | 30 min | Prozess-Sicherheit | reine Doku |
+| Q12 | **H4 System-Report-Seite** | ~2h | Support-Extremwert | als eigenes Feature bauen, testen |
+
+### ⚠️ Sieht nach Quick Win aus, ist aber Falle oder mittlerer Aufwand
+
+| Item | Warum NICHT als Quick Win |
+|---|---|
+| **M8 Build-Skripte zentralisieren** | Bewegt produktive Build-Pfade; bei 5 Repos schnell Bruch — erst mit vr-build-Design in Ruhe |
+| **I1 Conditional Asset Loading** | Erkennungslogik fehleranfaellig (Shortcode im Widget/Block/Template) → Views koennen ungestylt aussehen; braucht Tests |
+| **C1 PHPCS** | Erst-Lauf erzeugt hunderte Findings → Baseline/Suppressions konfigurieren ist halbtags Arbeit, nicht 1h |
+| **G4 DSGVO-Doku** | Inhaltlich Denkarbeit je Plugin (was wird wo gespeichert) — eher 2–3h als schnell |
+| **H5 WP-CLI-Kommandos** | Lohnt sich, aber Feature-Arbeit mit Tests — ~1 Tag |
+| **L1 Release-Pipeline (GH Actions)** | SSH-Keys in CI-Secrets, Testlaeufe, Rollback-Pfad — 1–2 Tage, kein Quick Win |
+| **I2 Minify-Pipeline** | Build-Aenderung + Sourcemap-/Debug-Handling — mittlerer Aufwand |
+| **J1 uninstall.php** | Gefahr Datenverlust bei Fehlern — pro Plugin sorgfaeltig pruefen |
+
+### ❌ Explizit KEINE Quick Wins (Architekturarbeit)
+
+M1 (Updater vereinheitlichen — Basis-Entscheidung noetig),
+M3/M4/M6 (Framework-Refactorings), vr-core, Namespace-Migration,
+Monorepo-Bewertung, WP.org-Publikation, eigene Domain, C2 Playwright,
+K-Serie (Editor), PHP-Namespace-Umstellung.
+
+**Regel:** Alles was produktive Update-/Build-Kanaele, gespeicherte
+Daten oder oeffentliche Ausgaben veraendert, ist per Definition kein
+Quick Win — egal wie klein der Diff aussieht.
+
+---
+
 *Erstellt: 2026-11-02 — Referenzen: docs/STYLE-KONZEPT.md,
 docs/GITHUB-UND-ZUGAENGE.md*
