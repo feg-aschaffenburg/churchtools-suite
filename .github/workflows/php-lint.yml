@@ -1,0 +1,28 @@
+name: PHP Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Lint all PHP files
+        run: |
+          status=0
+          while IFS= read -r -d '' file; do
+            php -l "$file" || status=1
+          done < <(find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0)
+          exit $status

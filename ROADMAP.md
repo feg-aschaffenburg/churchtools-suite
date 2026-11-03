@@ -1,6 +1,6 @@
 # ChurchTools Suite - Roadmap
 
-Letzte Aktualisierung: 28. August 2026 | Aktueller Stand: v1.3.0.13
+Letzte Aktualisierung: 2. November 2026 | Aktueller Stand: v1.3.0.13
 
 Diese Datei ist die einzige Zukunftsplanung des Hauptplugins. Der abgeschlossene Stand steht im README und in der Git-Historie.
 
@@ -20,14 +20,14 @@ Diese Datei ist die einzige Zukunftsplanung des Hauptplugins. Der abgeschlossene
 
 ## Entwicklungs-Workspace / Separierte Kopien
 
-Für die Weiterentwicklung wurden die relevanten Kopien in einen separaten Dev-Baum verschoben:
+Für die Weiterentwicklung liegen die relevanten Kopien in der lokalen Laragon-Installation:
 
-- Hauptplugin: `z:\dev\churchtools-suite`
-- Demo-Plugin: `z:\dev\churchtools-suite-demo`
-- Addons: `z:\dev\addons\churchtools-suite-elementor`, `z:\dev\addons\churchtools-suite-posts-sync`, `z:\dev\addons\churchtools-suite-presentations`
-- Demo-Theme: `z:\dev\themes\cts-demo-theme`
+- Hauptplugin: `C:\laragon\www\dev-churchtools-suite\wp-content\plugins\churchtools-suite`
+- Demo-Plugin: `C:\laragon\www\dev-churchtools-suite\wp-content\plugins\churchtools-suite-demo` (Demo-Site: `C:\laragon\www\demo-chrurchtools-suite`)
+- Addons: `C:\laragon\www\dev-churchtools-suite\wp-content\plugins\churchtools-suite-elementor`, `...\churchtools-suite-posts-sync`, `...\churchtools-suite-presentations`
+- Demo-Theme: `C:\laragon\www\demo-chrurchtools-suite\wp-content\themes\cts-demo-theme`
 
-Die Produktions-Ordner bleiben in `Z:\feg\app\public\wp-content\plugins` und `Z:\feg\app\public\wp-content\themes` erhalten.
+Die Produktions-Ordner bleiben auf der NAS in `\\NB_KAI_NAUMANN\SharedDrive\feg\app\public\wp-content\plugins` und `\\NB_KAI_NAUMANN\SharedDrive\feg\app\public\wp-content\themes` erhalten.
 
 ---
 

@@ -76,8 +76,12 @@ if ($oldZips) {
     $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
     foreach ($zip in $oldZips) {
         $archiveFile = Join-Path $ArchiveDir ($zip.Name -replace '\.zip$', "-$timestamp.zip")
-        Move-Item -Path $zip.FullName -Destination $archiveFile -Force
-        Write-Host "Archived: $($zip.Name) -> archiv\$($archiveFile | Split-Path -Leaf)" -ForegroundColor Yellow
+        try {
+            Move-Item -Path $zip.FullName -Destination $archiveFile -Force -ErrorAction Stop
+            Write-Host "Archived: $($zip.Name) -> archiv\$($archiveFile | Split-Path -Leaf)" -ForegroundColor Yellow
+        } catch {
+            Write-Host "Warnung: $($zip.Name) konnte nicht archiviert werden (Zugriff verweigert) - uebersprungen." -ForegroundColor Yellow
+        }
     }
 }
 

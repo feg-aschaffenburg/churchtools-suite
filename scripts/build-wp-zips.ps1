@@ -1,4 +1,4 @@
-# Erstellt WordPress-ZIPs für ChurchTools Suite (Monorepo-Skript)
+﻿# Erstellt WordPress-ZIPs für ChurchTools Suite (Monorepo-Skript)
 #
 # Aufruf vom Projektroot:
 #   .\scripts\build-wp-zips.ps1

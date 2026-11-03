@@ -12,11 +12,22 @@ Diese README ist die zentrale Dokumentation des aktuellen technischen Stands. Hi
 
 | Paket | Typ | Version | Einstiegspunkt | Status |
 | --- | --- | --- | --- | --- |
-| ChurchTools Integration Suite | Hauptplugin | 1.3.0.11 | `churchtools-suite.php` | aktiv entwickelt |
-| Elementor Integration | Addon | 1.0.0.3 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-elementor) | eigenständiges Plugin |
-| Posts Sync Addon | Addon | 0.2.0.3 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-posts-sync) | eigenständiges Plugin |
-| Presentations Addon | Addon | 0.1.3 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-presentations) | eigenständiges Plugin |
-| ChurchTools Suite Demo | optionales Plugin | 1.1.4.1 | separat | nur Dokumentation/Demo |
+| ChurchTools Integration Suite | Hauptplugin | 1.3.0.17 | `churchtools-suite.php` | aktiv entwickelt |
+| Elementor Integration | Addon | 1.0.0.4 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-elementor) | eigenständiges Plugin |
+| Posts Sync Addon | Addon | 0.2.0.4 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-posts-sync) | eigenständiges Plugin |
+| Presentations Addon | Addon | 0.1.4 | [eigenes Repository](https://github.com/feg-aschaffenburg/churchtools-suite-presentations) | eigenständiges Plugin |
+| ChurchTools Suite Demo | optionales Plugin | 1.1.4.3 | separat | nur Dokumentation/Demo |
+
+### Entwicklungs-Workspace
+
+Für die getrennte Weiterentwicklung stehen die Kopien in der lokalen Laragon-Installation zur Verfügung:
+
+- Hauptplugin: `C:\laragon\www\dev-churchtools-suite\wp-content\plugins\churchtools-suite`
+- Demo-Plugin: `C:\laragon\www\dev-churchtools-suite\wp-content\plugins\churchtools-suite-demo` (Demo-Site: `C:\laragon\www\demo-chrurchtools-suite`)
+- Addons: `C:\laragon\www\dev-churchtools-suite\wp-content\plugins\churchtools-suite-elementor`, `...\churchtools-suite-posts-sync`, `...\churchtools-suite-presentations`
+- Demo-Theme: `C:\laragon\www\demo-chrurchtools-suite\wp-content\themes\cts-demo-theme`
+
+Die Produktions-Instanzen bleiben weiterhin auf der NAS in `\\NB_KAI_NAUMANN\SharedDrive\feg\app\public\wp-content\plugins` und `\\NB_KAI_NAUMANN\SharedDrive\feg\app\public\wp-content\themes`.
 
 ### Abhaengigkeiten
 
@@ -63,7 +74,7 @@ Zusaetzlich wurden alte Backup-Templates unter `templates-backup-20260222-211402
 
 ## Entwicklung lokal und auf Servern
 
-- Lokaler PHP-Pfad in Local: `C:\Users\KasseFeg\AppData\Roaming\Local\lightning-services\php-8.2.29+0\bin\win64\php.exe`
+- PHP >= 8.2 lokal per CLI verfuegbar (z. B. ueber Laragon)
 - Deployment-Skripte nutzen lokale SSH-Host-Aliase aus der Benutzerkonfiguration
 - Standardziel der Deploy-Skripte fuer Testsysteme ist `plugin-test`
 
