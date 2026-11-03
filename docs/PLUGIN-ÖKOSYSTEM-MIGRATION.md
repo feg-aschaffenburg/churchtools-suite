@@ -4,6 +4,13 @@ Ziel: Alle Plugins (ChurchTools Suite + Addons, Demo, VR-Plugins) auf ein
 einheitliches Fundament stellen — persönliche Autorschaft, gemeinsamer
 Namespace, Shared Design System, einheitliche Release-/Update-Prozesse.
 
+> **Branding-Update (uebergeordnet):** Das Entwickler-Label ist
+> **CaraCode** (Kai Naumann, Alzenau) mit Domain `caracode.de` und
+> GitHub-Org `@caracode`/`@caracode-dev`. Vollstaendiges Paket:
+> `docs/ENTWICKLER-LABEL-CARACODE.md`. Wo dieser Plan `vr-`/`naumann-`
+> Entscheidungen nennt, gelten die CaraCode-Festlegungen als aktueller
+> Stand — siehe Abschnitt 0.2/0.4 und die Namespace-Hinweise unten.
+
 Betroffene Plugins (Stand heute):
 
 | Plugin | Repo | Version | Namespace aktuell |
@@ -28,36 +35,44 @@ Betroffene Plugins (Stand heute):
   ```php
   /**
    * Plugin Name: ChurchTools Integration Suite
-   * Author:      Kai Naumann
-   * Author URI:  https://github.com/<persoenlicher-account>
-   * License:     GPLv2 or later
-   * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+   * Plugin URI:  https://caracode.de
+   * Author:      CaraCode (Kai Naumann)
+   * Author URI:  https://caracode.de
+   * License:     GPL-2.0-or-later  (oder GPLv3 — Entscheidung s.u.)
    */
   ```
 
-- [ ] `LICENSE`-Datei (GPLv2) in allen Repos prüfen/ergänzen.
-- [ ] GPL-**No-Warranty**-Hinweis (§11/12) in README/Header — wichtig,
-      da als Privatperson publiziert wird (Haftung minimieren).
+- [ ] `LICENSE`-Datei in allen Repos prüfen/ergänzen.
+      **Hinweis zum CaraCode-Paket (GPLv3):** WP-Core steht unter
+      „GPLv2 or later" — GPLv3-Plugins sind zulaessig, aber WP.org
+      empfiehlt `GPL-2.0-or-later` fuer maximale Kompatibilitaet und
+      wp.org-Aufnahme. → Entscheidung GPLv2+ vs GPLv3 vor erstem Header-
+      Update final klaeren; der AS-IS-Haftungsausschluss aus dem
+      CaraCode-Paket bleibt in beiden Faellen richtig.
+- [ ] GPL-**No-Warranty**-Hinweis + AS-IS-Klausel (CaraCode-Paket) in
+      README/Header — wichtig, da als Privatperson publiziert wird.
+- [ ] Impressumspflicht §5 DDG: Klarnamen + Anschrift auf caracode.de
+      und im GitHub-Profil (aus CaraCode-Paket).
 - [ ] Prüfen, dass keine Secrets, internen Zugangsdaten oder
       personenbezogenen Daten in den Repos liegen.
 
 ### 0.2 Repository-Struktur
 
-**Entschieden (2026-11-02): Option A** — Repos ziehen auf den persönlichen
-GitHub-Account (`FEGAschaffenburg`) um. Die Organisationen können bei
-Bedarf forken; Autorschaft liegt damit klar bei der Person.
+**Entschieden (revidiert, CaraCode-Paket):** Neue GitHub-Organisation
+**`@caracode`** (oder `@caracode-dev`) als Heimat aller Plugins.
+Transfer via *Settings → Danger Zone → Transfer ownership* — Releases,
+Historie, Tags und Issues bleiben vollstaendig erhalten.
+(Ersetzt die fruehere Entscheidung „persoenlicher Account".)
 
-**Geplante Repos (Anlage erfolgt später, siehe Phase 1.x):**
+**Geplante Repos (unter @caracode):** alle bestehenden Plugin-Repos +
+`caracode.github.io` (Landingpage via GitHub Pages) +
+`plugin-design-system` + spaetere Plugin-Repos (z. B. CT Shirt Manager,
+Vereinsring Manager aus dem CaraCode-Paket).
 
-| Repo | Inhalt | Sichtbarkeit |
-|---|---|---|
-| `<user>/churchtools-suite` | Hauptplugin (Transfer von feg-aschaffenburg) | public |
-| `<user>/churchtools-suite-elementor` | Addon | public |
-| `<user>/churchtools-suite-posts-sync` | Addon | public |
-| `<user>/churchtools-suite-presentations` | Addon | public |
-| `<user>/churchtools-suite-demos` | Demo-Plugin | privat oder public |
-| `<user>/plugin-design-system` | Shared CSS/JS (vr-Namespace) | public |
-| `<user>/cts-demo-theme` | Demo-Theme | TBD |
+**Geplante Repos (unter @caracode):** alle bestehenden Plugin-Repos +
+`caracode.github.io` (Landingpage via GitHub Pages) +
+`plugin-design-system` + spaetere Plugin-Repos (z. B. CT Shirt Manager,
+Vereinsring Manager aus dem CaraCode-Paket).
 
 - [ ] Repo-Transfers durchführen (GitHub Transfer behält Issues/Stars/PRs)
 - [ ] `git remote set-url origin` in allen lokalen Checkouts
@@ -109,10 +124,16 @@ Zwei Ebenen (siehe STYLE-KONZEPT.md, Abschnitt Namespaces):
 | Ökosystem (shared) | `vr-` / `vr_` / `VR_` | Shared CSS/JS, gemeinsame Libs |
 | Plugin | `vr_cts_`, `vr_forms_` … | Options, AJAX, Cron, Caps, CPTs |
 
-**Festlegungen:**
+**Festlegungen (mit CaraCode-Aktualisierung):**
 
-- CSS: **alle Plugins auf `.vr-`-Namespace** migrieren; Plugin-Identität
-  über `--vr-header-gradient` + `.vr-scope-<plugin>`
+- CSS: Shared-Namespace **zur Debatte** — bisher `vr-` (Vereinsring-
+  Praegung). Mit Label CaraCode ist `.cc-` oder `.caracode-` die
+  organischere Wahl. → **Entscheidung offen:** `vr-` behalten (bereits
+  in dev-shared vorbereitet) oder `cc-` (label-konform). Empfehlung:
+  `cc-`, solange noch nichts ausgerollt ist.
+- PHP-Namespaces (CaraCode-Paket): `CaraCode\<Bereich>\<Plugin>`,
+  z. B. `CaraCode\ChurchTools\ShirtManager` — uebernimmt die bisherige
+  `VR_`-Idee in label-konformer Form.
 - PHP: schrittweise auf echte Namespaces (`namespace VR\Forms;`) oder
   `VR_`-Klassenprefix; keine Eile — erst bei größeren Refactorings
 - **Textdomain/Slug NICHT ändern** (`churchtools-suite` bleibt —
@@ -124,17 +145,23 @@ Zwei Ebenen (siehe STYLE-KONZEPT.md, Abschnitt Namespaces):
 
 ### 0.4 Update-Kanal & Fallback sichern
 
-**Offen (2026-11-02):** Überlegung läuft, eine eigene Hobby-Domain für
-die Plugins einzurichten. Bis dahin bleibt der Fallback auf
-`plugin.feg-aschaffenburg.de/download/` bestehen — der ist eingerichtet
-und getestet (alle ZIPs erreichbar, HTTP 200).
+**Entschieden (CaraCode-Paket):** Domain ist **`caracode.de`** — eigene
+Hobby-Domain beim privaten netcup-Konto (getrennt von Vereinsring-
+Buchhaltung). Landingpage kostenlos via **GitHub Pages**
+(`caracode.github.io`, A-Records auf GitHub-IPs, Enforce HTTPS).
+Releases/Fallback primaer ueber **GitHub Releases**
+(`releases/latest/download/…`).
 
 - [ ] Updater zeigt nach Repo-Umzug auf neue GitHub-URLs
       (`class-churchtools-suite-auto-updater.php`, `update-checker.php`)
-- [ ] Fallback-Domain später final festlegen (eigene Domain wäre der
-      sauberste Weg — dann Fallback-Base-URL im Code konfigurierbar machen)
+- [ ] Fallback-Strategie: GitHub-Releases als Primaerquelle ist ok,
+      aber den statischen Fallback (`plugin.feg-aschaffenburg.de/download/`
+      bzw. spaeter `download.caracode.de`) **als zweite Ebene behalten** —
+      kostet nichts und faengt GitHub-Ausfaelle/Redirect-Probleme ab
+- [ ] `download.caracode.de` kann spaeter statisch auf dem netcup-
+      Webspace oder ebenfalls via Pages laufen (statisch bleiben!)
 - [ ] Release-Prozess bleibt: `build-wp-zips.ps1` → `gh release` →
-      Fallback-Upload (`plugin-test`)
+      Fallback-Upload
 
 ### 0.5 Basis-Tooling (vor Plugin-Migration)
 
@@ -193,12 +220,15 @@ Cron-Hooks, Tabellennamen (Abwärtskompatibilität).
 
 | # | Frage | Status |
 |---|---|---|
-| 1 | Repo-Ziel | ✅ **entschieden:** persönlicher Account (2026-11-02) |
-| 2 | Fallback-Domain | offen: ggf. eigene Hobby-Domain; vorerst plugin.feg-aschaffenburg.de |
+| 1 | Repo-Ziel | ✅ **entschieden:** Org `@caracode` (CaraCode-Paket) |
+| 2 | Domain | ✅ **entschieden:** `caracode.de`, Pages-Landing + statischer Download-Fallback |
 | 3 | Migrations-Reihenfolge CSS | offen: Big-Bang pro Plugin vs. inkrementell |
-| 4 | VR-Plugin-Liste | offen: welche VR-Plugins kommen ins Ökosystem |
+| 4 | Plugin-Liste | offen: VR-Plugins + neue (CT Shirt Manager, VR Manager) |
 | 5 | Theme `cts-demo-theme` | offen: eigenes Repo? Namespace? |
 | 6 | GitHub-Repos anlegen | geplant, Umsetzung mit Phase 0.2/0.5 |
+| 7 | Shared-CSS-Namespace | offen: `vr-` (vorbereitet) vs `cc-` (label-konform) — Empfehlung `cc-` |
+| 8 | Lizenz-Variante | offen: `GPL-2.0-or-later` (WP.org-empfohlen) vs `GPLv3` (CaraCode-Paket) |
+| 9 | Logo | offen: Download-Datei im CaraCode-Paket fehlt lokal (siehe ENTWICKLER-LABEL-CARACODE.md) |
 
 ---
 
