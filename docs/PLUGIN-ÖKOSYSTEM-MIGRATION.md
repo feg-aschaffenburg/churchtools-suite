@@ -7,9 +7,14 @@ Namespace, Shared Design System, einheitliche Release-/Update-Prozesse.
 > **Branding-Update (uebergeordnet):** Das Entwickler-Label ist
 > **CaraCode** (Kai Naumann, Alzenau) mit Domain `caracode.de` und
 > GitHub-Org `@caracode`/`@caracode-dev`. Vollstaendiges Paket:
-> `docs/ENTWICKLER-LABEL-CARACODE.md`. Wo dieser Plan `vr-`/`naumann-`
-> Entscheidungen nennt, gelten die CaraCode-Festlegungen als aktueller
-> Stand — siehe Abschnitt 0.2/0.4 und die Namespace-Hinweise unten.
+> `docs/ENTWICKLER-LABEL-CARACODE.md`.
+>
+> **Wichtige Trennung:** CaraCode deckt **nur die ChurchTools-Plugins**
+> ab. Die **Vereinsring-Plugins bleiben ein separates Oekosystem**
+> (eigene Repos/Label, Details TBD) — sie teilen sich mit CaraCode
+> **nur das Shared Design System**. Konsequenz: Der gemeinsame
+> CSS-/Code-Namespace darf weder `vr-` noch `cc-` tragen, sondern
+> muss **label-neutral** sein.
 
 Betroffene Plugins (Stand heute):
 
@@ -64,15 +69,17 @@ Transfer via *Settings → Danger Zone → Transfer ownership* — Releases,
 Historie, Tags und Issues bleiben vollstaendig erhalten.
 (Ersetzt die fruehere Entscheidung „persoenlicher Account".)
 
-**Geplante Repos (unter @caracode):** alle bestehenden Plugin-Repos +
+**Geplante Repos (unter @caracode — nur ChurchTools-Linie):**
+`churchtools-suite` + 3 Addons + `churchtools-suite-demos` +
 `caracode.github.io` (Landingpage via GitHub Pages) +
-`plugin-design-system` + spaetere Plugin-Repos (z. B. CT Shirt Manager,
-Vereinsring Manager aus dem CaraCode-Paket).
+`cts-demo-theme` + spaetere CT-Plugins (z. B. CT Shirt Manager).
 
-**Geplante Repos (unter @caracode):** alle bestehenden Plugin-Repos +
-`caracode.github.io` (Landingpage via GitHub Pages) +
-`plugin-design-system` + spaetere Plugin-Repos (z. B. CT Shirt Manager,
-Vereinsring Manager aus dem CaraCode-Paket).
+**Separat (Vereinsring-Linie):** eigene Repo-/Label-Struktur, TBD —
+nicht unter @caracode. Zugaenge/Buchhaltung bleiben bei Vereinsring.
+
+**Neutral (beide Linien):** `plugin-design-system`-Repo — gemeinsames
+Shared CSS/JS. Ablage unter neutraler Adresse (eigene Mini-Org oder
+beim Label mit dem groesseren Pflegeanteil).
 
 - [ ] Repo-Transfers durchführen (GitHub Transfer behält Issues/Stars/PRs)
 - [ ] `git remote set-url origin` in allen lokalen Checkouts
@@ -126,11 +133,12 @@ Zwei Ebenen (siehe STYLE-KONZEPT.md, Abschnitt Namespaces):
 
 **Festlegungen (mit CaraCode-Aktualisierung):**
 
-- CSS: Shared-Namespace **zur Debatte** — bisher `vr-` (Vereinsring-
-  Praegung). Mit Label CaraCode ist `.cc-` oder `.caracode-` die
-  organischere Wahl. → **Entscheidung offen:** `vr-` behalten (bereits
-  in dev-shared vorbereitet) oder `cc-` (label-konform). Empfehlung:
-  `cc-`, solange noch nichts ausgerollt ist.
+- CSS: Shared-Namespace muss **label-neutral** sein (CaraCode nutzt
+  ihn genauso wie die Vereinsring-Linie). → **Entscheidung offen:**
+  Kandidaten `pds-` (plugin design system), `uix-`, `nx-`.
+  Empfehlung: `pds-` — selbsterklaerend, kollisionsarm.
+  (`vr-`-Vorbereitung in dev-shared ist per sed in Minuten umbaubar,
+  solange nichts ausgerollt ist.)
 - PHP-Namespaces (CaraCode-Paket): `CaraCode\<Bereich>\<Plugin>`,
   z. B. `CaraCode\ChurchTools\ShirtManager` — uebernimmt die bisherige
   `VR_`-Idee in label-konformer Form.
@@ -223,10 +231,10 @@ Cron-Hooks, Tabellennamen (Abwärtskompatibilität).
 | 1 | Repo-Ziel | ✅ **entschieden:** Org `@caracode` (CaraCode-Paket) |
 | 2 | Domain | ✅ **entschieden:** `caracode.de`, Pages-Landing + statischer Download-Fallback |
 | 3 | Migrations-Reihenfolge CSS | offen: Big-Bang pro Plugin vs. inkrementell |
-| 4 | Plugin-Liste | offen: VR-Plugins + neue (CT Shirt Manager, VR Manager) |
+| 4 | Plugin-Liste | CaraCode: ChurchTools-Linie (+ CT Shirt Manager). Vereinsring separat (u. a. VR Manager) |
 | 5 | Theme `cts-demo-theme` | offen: eigenes Repo? Namespace? |
 | 6 | GitHub-Repos anlegen | geplant, Umsetzung mit Phase 0.2/0.5 |
-| 7 | Shared-CSS-Namespace | offen: `vr-` (vorbereitet) vs `cc-` (label-konform) — Empfehlung `cc-` |
+| 7 | Shared-CSS-Namespace | offen: muss label-neutral sein (`pds-` empfohlen), da CaraCode + Vereinsring ihn teilen |
 | 8 | Lizenz-Variante | offen: `GPL-2.0-or-later` (WP.org-empfohlen) vs `GPLv3` (CaraCode-Paket) |
 | 9 | Logo | offen: Download-Datei im CaraCode-Paket fehlt lokal (siehe ENTWICKLER-LABEL-CARACODE.md) |
 
