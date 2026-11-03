@@ -66,6 +66,40 @@ Bedarf forken; Autorschaft liegt damit klar bei der Person.
 - [ ] Alte Repo-URLs: GitHub leitet automatisch weiter — trotzdem
       Updater zeitnah patchen
 
+#### Update-Faehigkeit beim Repo-Transfer sichern (Checkliste)
+
+**Mechanismen, die fuer uns arbeiten:**
+
+- GitHub-Transfer richtet automatische Weiterleitungen ein: Web-URL,
+  Releases-API (`api.github.com/repos/<alt>/...` → 301),
+  Release-Assets, git clone/push. `wp_remote_get` folgt Redirects —
+  installierte Plugins mit altem Updater-Code funktionieren weiter.
+- Der Fallback `…/download/` ist GitHub-unabhaengig und bleibt
+  unveraendert — Sicherheitsnetz falls ein Redirect klemmt.
+
+**Ablauf (Reihenfolge verbindlich):**
+
+1. Repo-Transfer durchfuehren (kein Fork, kein Neu-Anlegen —
+   sonst gehen Releases/Assets verloren)
+2. Verifizieren: `curl -I api.github.com/repos/feg-aschaffenburg/<repo>`
+   muss 301 auf die neue URL liefern; neue URL muss Releases liefern
+3. Updater-URLs im Code patchen (`auto-updater`, `update-checker`)
+4. Version bump + Release + Fallback-Upload — die neue ZIP traegt
+   bereits die neue URL
+5. `git remote set-url origin` in allen lokalen Checkouts
+6. Auf einer Testinstallation Update-Check ausloesen (Redirect-Test
+   aus Sicht einer Bestandsinstallation)
+
+**Fallstricke:**
+
+- ❌ Nach dem Transfer **kein** Repo gleichen Namens in
+  `feg-aschaffenburg` neu anlegen — das toetet den Redirect und alle
+  alten Installationen verlieren Updates (Org-Kopie nur als Fork
+  mit abweichendem Namen)
+- ❌ Kein Release zwischen Umzug und URL-Patch — alte ZIP wuerde
+  weiterhin auf die alte (dann weitergeleitete) URL zeigen und den
+  Patch zunichte machen
+
 ### 0.3 Namespace-Strategie (verbindlich)
 
 Zwei Ebenen (siehe STYLE-KONZEPT.md, Abschnitt Namespaces):
